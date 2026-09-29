@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OBMC Canteen Checkout</title>
+
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Courier New', Courier, monospace;
+            background: linear-gradient(135deg, #fff0f6, #ffd6e7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px;
+            color: #5a3042;
+        }
+
+        /* NAVIGATION */
+        nav {
+            width: 100%;
+            max-width: 900px;
+            background: #ffffff;
+            padding: 14px 24px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 6px 20px rgba(190, 70, 120, 0.15);
+            margin-bottom: 35px;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #d94f87;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #9b4267;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #e75491;
+        }
+
+        /* RECEIPT */
+        .receipt-card {
+            background: rgba(255, 255, 255, 0.95);
+            width: 350px;
+            padding: 28px;
+            border-radius: 22px;
+            box-shadow: 0 12px 35px rgba(190, 70, 120, 0.2);
+            border-top: 7px solid #e75491;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px dashed #e7a5bd;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: #d63f7a;
+        }
+
+        .header small {
+            color: #a86a81;
+        }
+
+        /* MENU */
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .menu-item {
+            background: #fff5f9;
+            padding: 11px 13px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .menu-item:hover {
+            background: #ffe5ef;
+            transform: translateY(-2px);
+        }
+
+        .menu-item label {
+            cursor: pointer;
+        }
+
+        input[type="checkbox"] {
+            accent-color: #e75491;
+            cursor: pointer;
+        }
+
+        /* BUTTON */
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #e75491, #d63f7a);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 12px;
+            margin-top: 5px;
+            box-shadow: 0 5px 12px rgba(215, 63, 122, 0.25);
+            transition: 0.2s;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #d63f7a, #c9326c);
+        }
+
+        /* TOTALS */
+        .totals {
+            border-top: 2px dashed #e7a5bd;
+            margin-top: 20px;
+            padding-top: 15px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .grand-total {
+            font-weight: bold;
+            font-size: 1.15rem;
+            color: #d63f7a;
+            margin-top: 10px;
+            border-top: 1px solid #f0c6d5;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">♡ Skewer</div>
+
+        <div class="nav-links">
+            <a href="sku.html">SKU Generator</a>
+            <a href="index.html">Receipt</a>
+        </div>
+    </nav>
+
+    <div class="receipt-card">
+
+        <div class="header">
+            <h2>🌸 OBMC Canteen</h2>
+            <small>Order Checkout</small>
+        </div>
+
+        <div class="menu-list">
+
+            <div class="menu-item">
+                <label>
+                    <input type="checkbox" id="hashbrown" value="35">
+                    Hashbrown
+                </label>
+                <span>₱35.00</span>
+            </div>
+
+            <div class="menu-item">
+                <label>
+                    <input type="checkbox" id="pepperoni_pizza" value="85">
+                    Pepperoni Pizza
+                </label>
+                <span>₱85.00</span>
+            </div>
+
+            <div class="menu-item">
+                <label>
+                    <input type="checkbox" id="iced_tea" value="25">
+                    Iced Tea
+                </label>
+                <span>₱25.00</span>
+            </div>
+
+            <div class="menu-item">
+                <label>
+                    <input type="checkbox" id="spam_musubi" value="65">
+                    Spam Musubi
+                </label>
+                <span>₱65.00</span>
+            </div>
+
+            <div class="menu-item">
+                <label>
+                    <input type="checkbox" id="chicken_nuggets" value="70">
+                    Chicken Nuggets
+                </label>
+                <span>₱70.00</span>
+            </div>
+
+        </div>
+
+        <button class="checkout-btn" py-click="order">
+            Calculate Total ♡
+        </button>
+
+        <div class="totals">
+
+            <div class="total-row">
+                <span>Subtotal:</span>
+                <span id="subtotal">₱0.00</span>
+            </div>
+
+            <div class="total-row">
+                <span>VAT (12%):</span>
+                <span id="vat">₱0.00</span>
+            </div>
+
+            <div class="total-row grand-total">
+                <span>Total:</span>
+                <span id="total">₱0.00</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="py" src="main.py"></script>
+
+</body>
+</html>
